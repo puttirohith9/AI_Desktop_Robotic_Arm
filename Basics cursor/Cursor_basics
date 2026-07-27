@@ -1,0 +1,534 @@
+Yes. Whenever you change **any file or folder** in Cursor—`Roadmap.md`, ROS 2 code, Python files, CAD documents, images in `Media`, or anything else—use this workflow.
+
+## The complete update cycle
+
+```text
+1. Edit files in Cursor
+2. Save the files
+3. Check what changed
+4. Stage the changes
+5. Commit the changes locally
+6. Push the commit to GitHub
+7. Verify on GitHub
+```
+
+---
+
+## Step 1: Make changes in Cursor
+
+For example, you might:
+
+* Add tasks to `Docs/Roadmap.md`
+* Add an image inside `Media`
+* Create ROS 2 code inside `Ros2_ws`
+* Add calculations
+* Update `README.md`
+
+When you edit and save a file in Cursor, the file on your desktop changes immediately:
+
+```text
+C:\Users\rohit\Desktop\AI_Desktop_Robotic_Arm
+```
+
+At this point:
+
+* Desktop folder: updated
+* Local Git history: not updated
+* GitHub: not updated
+
+Save the file using:
+
+```text
+Ctrl + S
+```
+
+Cursor may also auto-save, but pressing `Ctrl + S` makes sure it is saved.
+
+---
+
+## Step 2: Open the correct terminal
+
+In Cursor, open:
+
+```text
+Terminal → New Terminal
+```
+
+Your terminal should show:
+
+```powershell
+PS C:\Users\rohit\Desktop\AI_Desktop_Robotic_Arm>
+```
+
+This confirms that you are inside the robotic-arm repository.
+
+You can also verify using:
+
+```powershell
+pwd
+```
+
+You should see the project location.
+
+---
+
+## Step 3: Check what changed
+
+Before adding anything, run:
+
+```powershell
+git status
+```
+
+This is the command you should use most often.
+
+Suppose you edited `Roadmap.md`. Git may show:
+
+```text
+Changes not staged for commit:
+
+modified: Docs/Roadmap.md
+```
+
+Suppose you added a new Python file:
+
+```text
+Untracked files:
+
+Ros2_ws/src/robot_arm_controller/controller.py
+```
+
+Suppose you added a photo:
+
+```text
+Untracked files:
+
+Media/robot_arm_concept.png
+```
+
+### Meaning of the common status messages
+
+**Modified** means Git already knows the file, but you changed it.
+
+```text
+modified: Docs/Roadmap.md
+```
+
+**Untracked** means it is a new file that Git has never saved before.
+
+```text
+untracked: Media/robot_arm_concept.png
+```
+
+**Staged** means the file has been selected for the next commit.
+
+```text
+Changes to be committed
+```
+
+---
+
+## Step 4: Stage your changes
+
+To prepare all changes for the next commit, run:
+
+```powershell
+git add .
+```
+
+Remember the space:
+
+```text
+git add .
+       ↑
+     space
+```
+
+The period means:
+
+> Include all changed and newly created files under the current project folder.
+
+Then check again:
+
+```powershell
+git status
+```
+
+You should now see:
+
+```text
+Changes to be committed:
+```
+
+For example:
+
+```text
+modified: Docs/Roadmap.md
+new file: Media/robot_arm_concept.png
+new file: Ros2_ws/src/controller.py
+```
+
+These files are now **staged**, but they are not yet permanently recorded.
+
+---
+
+## Step 5: Commit the changes
+
+Create a local snapshot:
+
+```powershell
+git commit -m "Update project roadmap"
+```
+
+The message should explain what you changed.
+
+### Examples
+
+For the roadmap:
+
+```powershell
+git commit -m "Update ROS 2 learning roadmap"
+```
+
+For ROS 2 files:
+
+```powershell
+git commit -m "Add initial ROS 2 workspace"
+```
+
+For media:
+
+```powershell
+git commit -m "Add robotic arm concept images"
+```
+
+For CAD:
+
+```powershell
+git commit -m "Add initial gripper CAD model"
+```
+
+For several related changes:
+
+```powershell
+git commit -m "Add ROS 2 structure and update roadmap"
+```
+
+After this command:
+
+* Desktop files: updated
+* Local Git history: updated
+* GitHub: still not updated
+
+---
+
+## Step 6: Push to GitHub
+
+Run:
+
+```powershell
+git push
+```
+
+This uploads the new local commit to GitHub.
+
+After the push succeeds, you will usually see something like:
+
+```text
+main -> main
+```
+
+Now:
+
+* Desktop files: updated
+* Local Git history: updated
+* GitHub repository: updated
+
+---
+
+## Step 7: Verify the GitHub update
+
+Open your GitHub repository in the browser and refresh the page.
+
+You should see:
+
+* Your new or modified files
+* Your latest commit message
+* The latest update time
+
+For example:
+
+```text
+Update ROS 2 learning roadmap
+```
+
+You can also verify through the terminal:
+
+```powershell
+git status
+```
+
+After a successful commit and push, it should say something similar to:
+
+```text
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+```
+
+That means:
+
+* No unsaved Git changes are waiting
+* Your local commit matches GitHub
+* Everything is synchronized
+
+---
+
+# Your regular command sequence
+
+Every time you finish a meaningful change, use:
+
+```powershell
+git status
+git add .
+git status
+git commit -m "Describe what you changed"
+git push
+git status
+```
+
+You do not technically need every `git status`, but while learning, this sequence is best because you can see each stage.
+
+---
+
+# Practical example: updating `Roadmap.md`
+
+You open:
+
+```text
+Docs/Roadmap.md
+```
+
+You add:
+
+```markdown
+- [ ] Install ROS 2 Jazzy
+- [ ] Create publisher and subscriber nodes
+```
+
+Save it, then run:
+
+```powershell
+git status
+git add .
+git commit -m "Add ROS 2 tasks to project roadmap"
+git push
+```
+
+GitHub will then receive the updated `Roadmap.md`.
+
+---
+
+# Practical example: adding files to `Media`
+
+Suppose you place this file inside your project:
+
+```text
+Media/robot_arm_design.png
+```
+
+Then run:
+
+```powershell
+git status
+git add .
+git commit -m "Add initial robotic arm design image"
+git push
+```
+
+The image will appear in the `Media` folder on GitHub.
+
+One caution: GitHub is suitable for normal project images and short demo files, but large videos and very large CAD binaries can make the repository unnecessarily heavy.
+
+---
+
+# Practical example: updating ROS 2 code
+
+Suppose you create:
+
+```text
+Ros2_ws/src/robot_arm_controller/robot_arm_controller/move_joint.py
+```
+
+After testing and saving it:
+
+```powershell
+git status
+git add .
+git commit -m "Add ROS 2 joint movement node"
+git push
+```
+
+That code is now saved both locally and on GitHub.
+
+---
+
+# How the three locations relate
+
+```text
+Cursor
+   ↓ Save
+Desktop project files
+   ↓ git add
+Staging area
+   ↓ git commit
+Local Git history
+   ↓ git push
+GitHub repository
+```
+
+Cursor is not a separate copy of your project. Cursor is simply editing the files stored in:
+
+```text
+C:\Users\rohit\Desktop\AI_Desktop_Robotic_Arm
+```
+
+Git is built into that project through a hidden folder called:
+
+```text
+.git
+```
+
+GitHub is the remote online repository.
+
+---
+
+# What happens when you only edit and save?
+
+Suppose you update `Roadmap.md` and stop after `Ctrl + S`.
+
+The desktop file is updated, but GitHub remains unchanged.
+
+```text
+Cursor/Desktop: New version
+GitHub: Old version
+```
+
+Your changes are not lost, but they exist only on your computer.
+
+---
+
+# What happens after `git add .` only?
+
+The changes are prepared for a commit, but no snapshot has been created yet.
+
+```text
+Desktop: Updated
+Staging area: Updated
+Local history: Not updated
+GitHub: Not updated
+```
+
+---
+
+# What happens after `git commit` but before `git push`?
+
+The changes are safely recorded in your computer's local Git history.
+
+```text
+Desktop: Updated
+Local Git: Updated
+GitHub: Old version
+```
+
+If your computer fails before pushing, the commit may still be lost with the computer because it has not been uploaded.
+
+---
+
+# What happens after `git push`?
+
+Everything is synchronized:
+
+```text
+Desktop project = Local Git commit = GitHub repository
+```
+
+More precisely, GitHub matches your latest **committed** version. Any edits made after that commit will still remain only on your computer until you repeat the cycle.
+
+---
+
+## Important: empty folders do not appear on GitHub
+
+Git tracks files, not empty folders.
+
+For example, if these folders contain nothing:
+
+```text
+AI/
+CAD/
+Firmware/
+Media/
+Simulation/
+Vision/
+```
+
+they might not appear on GitHub.
+
+To keep an empty folder visible, create a file inside it named:
+
+```text
+.gitkeep
+```
+
+Example:
+
+```text
+Media/.gitkeep
+```
+
+Then commit and push it:
+
+```powershell
+git add .
+git commit -m "Add project directory structure"
+git push
+```
+
+---
+
+## Best habit for this project
+
+Do not commit after every sentence or every line of code. Commit after a meaningful unit of work.
+
+Good examples:
+
+```text
+Add initial ROS 2 package
+Implement forward kinematics
+Update project roadmap
+Add gripper CAD files
+Fix joint angle calculation
+Add object detection prototype
+```
+
+Avoid unclear messages such as:
+
+```text
+changes
+update
+work
+new stuff
+final
+```
+
+Your everyday formula is:
+
+```powershell
+git status
+git add .
+git commit -m "What you completed"
+git push
+```
+
+That is how you update your desktop project, local Git history, and GitHub repository.
